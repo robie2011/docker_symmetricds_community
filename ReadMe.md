@@ -7,7 +7,7 @@ Project contains:
 
 container description can be found in compose file `docker-compose.yml`.
 
-## SymmetricDS Configuration
+## SymmetricDS Configuration
 - content of `sym_image/data` will be copied to `/data` during image build process
 - are stored in sym_image/data folder and will be copied to image during build process
 - Enviromental variable `SYM_ENGINE_FILE` is used for choosing engine on first container start (default: `client-machine01.properties`).
