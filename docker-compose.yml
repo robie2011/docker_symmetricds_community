@@ -1,0 +1,63 @@
+version: '3'
+
+services:
+  db0:
+    container_name: db0
+    hostname: db0
+    image: k0st/alpine-mariadb
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      TZ: "Europe/Zurich"
+    networks:
+      sym_net:
+        ipv4_address: 172.20.10.100
+  
+  db1:
+    container_name: db1
+    hostname: db1
+    image: k0st/alpine-mariadb
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      TZ: "Europe/Zurich"
+    networks:
+      sym_net:
+        ipv4_address: 172.20.10.101
+
+  sym0:
+    container_name: sym0
+    hostname: sym0
+    build: sym_image
+    depends_on:
+      - db0
+    environment:
+      TZ: "Europe/Zurich"
+      IP_DB: "172.20.10.100"
+      DB_SCRIPT_PREINSTALL: "import.preinstall.sql"
+      DB_SCRIPT_POSTINSTALL: "import_master.sql"
+      SYM_ENGINE_FILE: "server.properties"
+    networks:
+      sym_net:
+        ipv4_address: 172.20.10.10
+
+  sym1:
+    container_name: sym1
+    hostname: sym1
+    build: sym_image
+    depends_on:
+      - db1
+    environment:
+      TZ: "Europe/Zurich"
+      IP_DB: "172.20.10.101"
+      DB_SCRIPT_PREINSTALL: "import.preinstall.sql"
+      SYM_ENGINE_FILE: "client-machine01.properties"
+    networks:
+      sym_net:
+        ipv4_address: 172.20.10.11
+
+networks:
+  sym_net:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+      - subnet: 172.20.10.0/24
