@@ -11,6 +11,11 @@ container description can be found in compose file `docker-compose.yml`.
 - content of `sym_image/data` will be copied to `/data` during image build process
 - are stored in sym_image/data folder and will be copied to image during build process
 - Enviromental variable `SYM_ENGINE_FILE` is used for choosing engine on first container start (default: `client-machine01.properties`).
+- used db for sync: `sym`. Desired table configurations can be made in `import.preinstall.sql`.
+- services
+    - sym0: is the master node. Uses `server.properties` engine file.
+    - symmetricds configuration can be found in `import_master.sql`
+    - sym1: is the client node. Uses `client-machine01.properties` engine file.
 - For each SymmetricDS container an sql script can be imported once. Enviromental variable `DB_SCRIPT` is used to specify it.
 
 ## Admin Tasks
@@ -21,9 +26,9 @@ container description can be found in compose file `docker-compose.yml`.
 - start containers: `docker-compose start`
 - note: `/data/symmetricds_start.sh` will be executed on each container start
 - database services:
-    - db0: 172.20.10.100
-    - db1: 172.20.10.101
-    - root password: root
+    - db0: `172.20.10.100`
+    - db1: `172.20.10.101`
+    - root password: `root`
 
 ## Note
 - It is not possible to access containers from host machine over TCP/IP on mac. Workaround: https://github.com/wojas/docker-mac-network
