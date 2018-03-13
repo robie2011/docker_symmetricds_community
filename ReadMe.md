@@ -20,14 +20,11 @@ container description can be found in compose file `docker-compose.yml`.
 - stop containers: `docker-compose stop`
 - start containers: `docker-compose start`
 - note: `/data/symmetricds_start.sh` will be executed on each container start
-- URLS: 
-    - Sym Node 0: http://172.20.10.10:31415/app
-    - Sym Node 1: http://172.20.10.11:31415/app
-- jdbc connections:
-    - db0: `jdbc:mysql://172.20.10.100/sym?tinyInt1isBit=false&zeroDateTimeBehavior=convertToNull`
-    - db1: `jdbc:mysql://172.20.10.101/sym?tinyInt1isBit=false&zeroDateTimeBehavior=convertToNull`
-- db root password: root
+- database services:
+    - db0: 172.20.10.100
+    - db1: 172.20.10.101
+    - root password: root
 
-Known Issues:
+## Note
 - It is not possible to access containers from host machine over TCP/IP on mac. Workaround: https://github.com/wojas/docker-mac-network
-- Env variable `$DB_IP` is redundante. Can be read from properties-file.
+- Env variable `$DB_IP` is redundant. Can be read from properties-file. Need fix.
